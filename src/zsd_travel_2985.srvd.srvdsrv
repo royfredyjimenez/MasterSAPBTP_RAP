@@ -1,0 +1,4 @@
+@EndUserText.label: 'SD Travel'
+define service ZSD_TRAVEL_2985 {
+  expose Z_C_TRAVEL_2985 as travel_log;
+}
