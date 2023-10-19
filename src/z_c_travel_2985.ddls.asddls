@@ -1,35 +1,31 @@
-@EndUserText.label: 'Consumption - Travel'
-@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'Consumption View - Travel'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 @Metadata.allowExtensions: true
-define root view entity Z_C_TRAVEL_2985
-  as projection on Z_I_TRAVEL_2985
+define root  view entity Z_C_TRAVEL_2985 as projection on Z_I_TRAVEL_2985
 {
-
-  key     travel_id          as TravelID,
-          @ObjectModel.text.element: ['AgencyName']
-          agency_id          as AgencyID,
-          _Agency.Name       as AgencyName,
-          @ObjectModel.text.element: ['CustomerName']
-          customer_id        as CustomerID,
-          _Customer.LastName as CustomerName,
-          begin_date         as BeginDate,
-          end_date           as EndDate,
-          @Semantics.amount.currencyCode: 'CurrencyCode'
-          booking_fee        as BookingFee,
-          @Semantics.amount.currencyCode: 'CurrencyCode'
-          total_price        as TotalPrice,
-          @Semantics.currencyCode: true
-          currency_code      as CurrencyCode,
-          description        as Description,
-          overall_status     as TravelStatus,
-          last_changed_at    as LastChangedAt,
-          @Semantics.amount.currencyCode: 'CurrencyCode'
-          @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZCL_VIRT_ELEM_2985'
-  virtual DiscountPrice : /dmo/total_price,
-          /* Associations */
-          _Agency,
-          _Booking : redirected to composition child Z_C_BOOKING_2985,
-          _Currency,
-          _Customer
-
+ key TravelId,
+      @Consumption.valueHelpDefinition: [ { entity: { name: '/DMO/I_Agency', element: 'AgencyID' } } ]
+      @Search.defaultSearchElement: true
+      AgencyId,
+      @Consumption.valueHelpDefinition: [ { entity: { name: '/DMO/I_Customer', element: 'CustomerID' } } ]
+      @Search.defaultSearchElement: true
+      CustomerId,
+      BeginDate,
+      EndDate,
+      @Semantics.amount.currencyCode: 'CurrencyCode'
+      BookingFee,
+      @Semantics.amount.currencyCode: 'CurrencyCode'
+      TotalPrice,
+      @Consumption.valueHelpDefinition: [ { entity: { name: 'I_Currency', element: 'Currency' } } ]
+      CurrencyCode,
+      Description,
+      CreatedBy,
+      CreatedAt,
+      LastChangedBy,
+      LastChangedAt,
+    /* Associations */
+    _Agency,
+     _Booking : redirected to composition child Z_C_BOOK_2985,
+    _Currency,
+    _Customer
 }
