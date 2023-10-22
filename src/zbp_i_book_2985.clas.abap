@@ -1,4 +1,4 @@
-class ZBP_I_BOOKSUP_2985 definition
+class ZBP_I_BOOK_2985 definition
   public
   abstract
   final
@@ -11,5 +11,5 @@ ENDCLASS.
 
 
 
-CLASS ZBP_I_BOOKSUP_2985 IMPLEMENTATION.
+CLASS ZBP_I_BOOK_2985 IMPLEMENTATION.
 ENDCLASS.

@@ -30,12 +30,18 @@ CLASS zcl_insert_data_2985 IMPLEMENTATION.
              total_price,
              currency_code,
              description,
-             status        AS overall_status,
-             createdby     AS created_by,
-             createdat     AS created_at,
-             lastchangedby AS last_changed_by,
-             lastchangedat AS last_changed_at
+            CASE status
+              WHEN    'B' THEN 'A'    "ACCEPTED
+              WHEN 'X' THEN 'X'   "CANCELLED
+              ELSE    'O'         "OPEN
+           END    AS overall_status,
+          createdby   AS created_by,
+          createdat   AS  created_at,
+          lastchangedby   AS last_changed_by,
+          lastchangedat   AS  last_changed_at
+
     INTO CORRESPONDING FIELDS OF TABLE @lt_travel
+
     UP TO 50 ROWS.
 
     SELECT FROM /dmo/booking
@@ -53,7 +59,8 @@ CLASS zcl_insert_data_2985 IMPLEMENTATION.
 
     DELETE FROM: ztb_travel_2985,
                  ztb_booking_2985,
-                 ztb_travel_2985.
+                 ztb_booksup_2985.
+
 
     INSERT: ztb_travel_2985  FROM TABLE @lt_travel,
             ztb_booking_2985 FROM TABLE @lt_booking,

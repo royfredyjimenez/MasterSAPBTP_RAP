@@ -1,41 +1,33 @@
 @Metadata.layer: #CORE
 @UI: {
-headerInfo: {
-    typeName: 'Travel',
-    typeNamePlural: 'Travels',
-
-    title: {
-        type: #STANDARD,
-        value: 'TravelID'
-           }
-} }
-annotate view Z_C_TRAVEL_2985
-    with 
+    headerInfo: {
+        typeName: 'Travel',
+        typeNamePlural: 'Travels'
+    },
+    presentationVariant: [{
+        sortOrder: [{
+            by: 'TravelId',
+            direction: #ASC
+        }],
+        visualizations: [{
+            type: #AS_LINEITEM
+        }]
+    }]
+}
+annotate view Z_C_TRAVEL_2985 with
 {
-    @UI.facet: [{
-                  id: 'Travel',
-                  purpose: #STANDARD,
-                  type: #IDENTIFICATION_REFERENCE,
-                  label: 'Travel',
-                  position: 10 },
-                  { id: 'Booking',
-                  purpose:  #STANDARD,
-                  type: #LINEITEM_REFERENCE,
-                  label: 'Booking',
-                  position: 20,
-                  targetElement: '_Booking'}]
-  @UI: {
-          lineItem: [{
-              position: 10,
-              exclude: true,
-              hidden: true,
-              importance: #HIGH }],
-
-          identification: [ {
-              position: 10,
-              label: 'Travel ID [1,...,99999999]' }]
-  }
-  @Search.defaultSearchElement: true
+  @UI.facet: [{ id: 'Travel',
+              purpose: #STANDARD,
+              type: #IDENTIFICATION_REFERENCE,
+              label: 'Travel',
+              position: 10 },
+            { id: 'Booking',
+              purpose: #STANDARD,
+              type: #LINEITEM_REFERENCE,
+              label: 'Booking',
+              position: 20,
+              targetElement: '_Booking' }]
+ 
   TravelId;
 
   @UI: {
@@ -43,10 +35,10 @@ annotate view Z_C_TRAVEL_2985
           identification: [ { position: 20 } ],
           selectionField: [ { position: 20 } ] }
   @Consumption.valueHelpDefinition: [
-  { entity: { name: '/DMO/I_Agency', element: 'AgencyID'} } ]
+  { entity: { name: '/DMO/I_Agency', element: 'AgencyID'} } 
+  ]
+ 
   AgencyId;
-
-
   @UI: {
           lineItem: [{ position: 30, importance: #HIGH }],
           identification: [ { position: 30 } ],
@@ -81,12 +73,9 @@ annotate view Z_C_TRAVEL_2985
   @UI: { identification: [ { position: 46 } ] }
   Description;
 
-  @UI: {
-   lineItem: [ { position: 50, importance: #HIGH },
-               { type: #FOR_ACTION,
-                 dataAction: 'createTravelByTemplate',
-                 label: 'Create Travel by Template' } ],
-  identification: [ { position: 45, label: 'Status [O(Open)|A(Accepted)|X(Canceled)]' } ] }
+  @UI: { lineItem: [ { position: 60, importance: #HIGH ,criticality: 'OverallStatusCriticality' } ] }
+  @UI.selectionField: [{ position: 60 }]
+  @UI.textArrangement: #TEXT_ONLY  
   TravelStatus;
 
   @UI.hidden: true
