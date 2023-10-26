@@ -1,48 +1,127 @@
-managed ;
+managed;
 //strict ( 2 );
-
-
 define behavior for Z_I_TRAVEL_2985 alias Travel //alias <alias_name>
 implementation in class zbp_i_travel_2985 unique
 persistent table ztb_travel_2985
+with additional save
 lock master
 authorization master ( instance )
-//etag master <field_name>
+etag master LastChangedAt           //last_changed_at
 {
+
   create;
   update;
   delete;
-  association _Booking { create; }
+  association _Booking { create ( features : instance ); }
+  // Campos para el control estático solo lectura
+  field ( readonly ) LastChangedAt, LastChangedBy, CreatedBy, CreatedAt, TotalPrice;
+  // Campo obligatorios para la creación de un nuevo registro
+  field ( mandatory : create ) travelid, agencyid, CustomerId, TravelStatus, bookingfee, CurrencyCode;
+  // Control dinámico para campos
+  field ( features : instance ) travelid, TravelStatus;
+  determination setInitialStatus on modify { create; }
+  determination calculateTotalPrice on modify { field BookingFee, CurrencyCode; }
+  determination calculateTravelID on save { create; }
+  //Validations
+  validation validateCustomer on save { create; field customerid; }
+  validation validateDates on save { create; field begindate, enddate; }
+  validation validateStatus on save { create; field TravelStatus; }
+  validation validateAgency on save { create; field AgencyId; }
+
+  //Actions
+  action ( features : instance ) acceptTravel result [1] $self;
+  action ( features : instance ) rejectTravel result [1] $self;
+  internal action recalcTotalPrice;
+  action createTravelByTemplate result [1] $self;
+
+
+  mapping for ztb_travel_2985
+    {
+      travelid      = travel_id;
+      agencyid      = agency_id;
+      customerid    = customer_id;
+      begindate     = begin_date;
+      enddate       = end_date;
+      bookingfee    = booking_fee;
+      totalprice    = total_price;
+      currencycode  = currency_code;
+      description   = description;
+      TravelStatus  = overall_status;
+      createdby     = created_by;
+      createdat     = created_at;
+      LastChangedAt = last_changed_at;
+      LastChangedBy = last_changed_by;
+    }
 }
 
-define behavior for Z_I_BOOK_2985 alias Booking //alias <alias_name>
+define behavior for Z_I_BOOK_2985 alias Booking
 implementation in class zbp_i_book_2985 unique
 persistent table ztb_booking_2985
 lock dependent by _Travel
 authorization dependent by _Travel
-//etag master <field_name>
+etag master LastChangedAt
 {
+  association _Travel;
+  association _BookingSupplement { create ( features : instance ); }
   update;
   delete;
-  field ( readonly ) TravelId;
-  determination calculateBookingID on modify { create; }
-  determination calculateTotalPrice on modify { field FlightPrice, CurrencyCode; }
+  // Read only fields
+  field ( readonly ) travelid;
+  // Mandatory fields
+  field ( mandatory : create ) bookingid, carrier_id, connectionid, flightdate, bookingstatus;
 
-  association _Travel;
-  association _bookingSupplement { create; }
+  //Validations
+  validation validateStatus on save { create; field bookingstatus; }
+
+  //Determinations
+  //determination calculateBookingID on modify { create; }
+  determination calculateTotalFlightPrice on modify { field flightprice, currencycode; }
+
+  mapping for ztb_booking_2985
+    {
+      travelid      = travel_id;
+      bookingid     = booking_id;
+      bookingdate   = booking_date;
+      customerid    = customer_id;
+      carrier_id    = carrier_id;
+      connectionid  = connection_id;
+      flightdate    = flight_date;
+      flightprice   = flight_price;
+      currencycode  = currency_code;
+      bookingstatus = booking_status;
+      LastChangedAt = last_changed_at;
+    }
 }
 
 define behavior for Z_I_BOOKSUPPL_2985 alias BookingSupplement //alias <alias_name>
 implementation in class zbp_i_booksup_2985 unique
 persistent table ztb_booksup_2985
-
 lock dependent by _Travel
 authorization dependent by _Travel
-//etag master <field_name>
+etag master LastChangedAt
 {
+   // Campos estáticos de control
+  field ( readonly ) travelid, bookingid;
+  //Campos obligatorios
+  field ( mandatory : create ) supplementid, price;
+
   update;
   delete;
-  field ( readonly ) TravelId, BookingId;
+
+  //Determinations
+  determination calculateTotalSupplimPrice on modify { field price, Currency; }
+
   association _Travel;
   association _Booking;
+
+  mapping for ztb_booksup_2985
+    {
+      travelid            = travel_id;
+      bookingid           = booking_id;
+      BookingSupplementId = booking_supplement_id;
+      supplementid        = supplement_id;
+      price               = price;
+      Currency            = currency_code;
+      LastChangedAt       = last_changed_at;
+    }
 }

@@ -10,14 +10,14 @@
 /*+[hideWarning] { "IDS" : [ "CARDINALITY_CHECK" ]  } */
 define view entity Z_I_BOOK_2985
   as select from ztb_booking_2985 as Booking
- composition [0..*] of Z_I_BOOKSUPPL_2985 as _bookingSupplement
-  association        to parent Z_I_TRAVEL_2985 as _Travel     on  $projection.TravelId = _Travel.TravelId
-  association [1..1] to /DMO/I_Customer        as _Customer   on  $projection.CustomerId = _Customer.CustomerID
-  association [1..1] to /DMO/I_Carrier         as _Carrier    on  $projection.carrier_id = _Carrier.AirlineID
-  association [1..1] to /DMO/I_Connection      as _Connection on  $projection.ConnectionId = _Connection.ConnectionID
-  association [0..1] to /dmo/flight            as _Flight     on  $projection.ConnectionId = _Flight.connection_id
-                                                              and $projection.carrier_id   = _Flight.carrier_id
-                                                              and $projection.FlightDate   = _Flight.flight_date
+  composition [0..*] of Z_I_BOOKSUPPL_2985 as _bookingSupplement
+  association        to parent Z_I_TRAVEL_2985    as _Travel on  $projection.TravelId = _Travel.TravelId
+  association [1..1] to /DMO/I_Customer    as _Customer      on  $projection.CustomerId = _Customer.CustomerID
+  association [1..1] to /DMO/I_Carrier     as _Carrier       on  $projection.carrier_id = _Carrier.AirlineID
+  association [1..1] to /DMO/I_Connection  as _Connection    on  $projection.ConnectionId = _Connection.ConnectionID
+  association [0..1] to /dmo/flight        as _Flight        on  $projection.ConnectionId = _Flight.connection_id
+                                                             and $projection.carrier_id   = _Flight.carrier_id
+                                                             and $projection.FlightDate   = _Flight.flight_date
 {
   key Booking.travel_id       as TravelId,
   key Booking.booking_id      as BookingId,

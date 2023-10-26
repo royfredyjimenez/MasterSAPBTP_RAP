@@ -73,7 +73,10 @@ annotate view Z_C_TRAVEL_2985 with
   @UI: { identification: [ { position: 46 } ] }
   Description;
 
-  @UI: { lineItem: [ { position: 60, importance: #HIGH ,criticality: 'OverallStatusCriticality' } ] }
+  @UI: { lineItem: [ { position: 60, importance: #HIGH ,criticality: 'OverallStatusCriticality' } , 
+   { type: #FOR_ACTION, dataAction: 'createTravelByTemplate', label: 'Create Travel by Template' } ],
+  identification: [ { position: 55, label: 'Status [O(Open)|A(Accepted)|X(Canceled)]' } ] }
+  
   @UI.selectionField: [{ position: 60 }]
   @UI.textArrangement: #TEXT_ONLY  
   TravelStatus;

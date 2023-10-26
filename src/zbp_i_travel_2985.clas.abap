@@ -1,15 +1,5 @@
-class ZBP_I_TRAVEL_2985 definition
-  public
-  abstract
-  final
-  create public .
-
-public section.
-protected section.
-private section.
+CLASS zbp_i_travel_2985 DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF z_i_travel_2985.
 ENDCLASS.
 
-
-
-CLASS ZBP_I_TRAVEL_2985 IMPLEMENTATION.
+CLASS zbp_i_travel_2985 IMPLEMENTATION.
 ENDCLASS.

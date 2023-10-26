@@ -4,7 +4,6 @@
   <asx:values>
    <AREAT>Grupo de funciones Supplement Update</AREAT>
    <INCLUDES>
-    <SOBJ_NAME>LZFG_SUPPL_2985TOP</SOBJ_NAME>
     <SOBJ_NAME>SAPLZFG_SUPPL_2985</SOBJ_NAME>
    </INCLUDES>
    <FUNCTIONS>
