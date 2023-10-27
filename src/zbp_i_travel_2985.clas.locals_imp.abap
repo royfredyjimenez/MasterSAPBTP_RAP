@@ -691,9 +691,9 @@ CLASS lhc_Travel IMPLEMENTATION.
 
         APPEND VALUE #( %tky        = travel-%tky
                         %state_area = 'VALIDATE_AGENCY'
-                        %msg        = NEW zcm_rap_308901(
+                        %msg        = NEW zcm_validate_agency(
                                           severity = if_abap_behv_message=>severity-error
-                                          textid   = zcm_rap_308901=>agency_unknown
+                                          textid   = zcm_validate_agency=>agency_unknown
                                           agencyid = travel-AgencyID )
                         %element-AgencyID = if_abap_behv=>mk-on )
           TO reported-travel.

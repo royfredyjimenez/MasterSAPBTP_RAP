@@ -26,7 +26,7 @@ define root view entity Z_C_TRAVEL_2985
       Description,
       @EndUserText.label: 'Status'
       @ObjectModel.text.element: ['TravelStatusText']
-      @Consumption.valueHelpDefinition: [{ entity : {name: 'ZI_FE_STAT_000044', element: 'TravelStatusId'  } }]
+      @Consumption.valueHelpDefinition: [{ entity : {name: 'ZI_FE_STAT_001009', element: 'TravelStatusId'  } }]
       TravelStatus,
       _TravelStatus.TravelStatusText as TravelStatusText,
       OverallStatusCriticality,

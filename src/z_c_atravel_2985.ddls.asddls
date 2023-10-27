@@ -1,29 +1,35 @@
 @EndUserText.label: 'Consumption - Travel Approval'
-@AccessControl.authorizationCheck: #CHECK
-@Metadata.allowExtensions: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 define root view entity Z_C_ATRAVEL_2985
   as projection on Z_I_TRAVEL_2985
 {
-
-  key travel_id          as TravelID,
+  key TravelId,
       @ObjectModel.text.element: ['AgencyName']
-      agency_id          as AgencyID,
+      AgencyId,
       _Agency.Name       as AgencyName,
       @ObjectModel.text.element: ['CustomerName']
-      customer_id        as CustomerID,
+      CustomerId,
       _Customer.LastName as CustomerName,
-      begin_date         as BeginDate,
-      end_date           as EndDate,
-      @Semantics.amount.currencyCode: 'CurrencyCode'      
-      booking_fee        as BookingFee,
+      BeginDate,
+      EndDate,
       @Semantics.amount.currencyCode: 'CurrencyCode'
-      total_price        as TotalPrice,
+      BookingFee,
+      @Semantics.amount.currencyCode: 'CurrencyCode'
+      TotalPrice,
       @Semantics.currencyCode: true
-      currency_code      as CurrencyCode,
-      description        as Description,
-      overall_status     as TravelStatus,
-      last_changed_at    as LastChangedAt,
+      CurrencyCode,
+      Description,
+      TravelStatus,
+      TravelStatusText,
+      OverallStatusCriticality,
+      CreatedBy,
+      CreatedAt,
+      LastChangedBy,
+      LastChangedAt,
       /* Associations */
-      _Booking : redirected to composition child Z_C_ABOOKING_2985,
-      _Customer
+      _Agency,
+      _Booking,
+      _Currency,
+      _Customer,
+      _TravelStatus
 }

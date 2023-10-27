@@ -6,7 +6,7 @@
 define view Z_I_BOOKING_2985
   as select from ztb_booking_2985 as Booking
   composition [0..*] of Z_I_BOOKSUP_2985  as _BookingSupplement
-  association        to parent Z_I_TRAVEL_2985   as _Travel on $projection.travel_id = _Travel.travel_id
+  association        to parent Z_I_TRAVEL_2985   as _Travel on $projection.travel_id = _Travel.TravelId
   association [1..1] to /DMO/I_Customer   as _Customer      on $projection.customer_id = _Customer.CustomerID
   association [1..1] to /DMO/I_Carrier    as _Carrier       on $projection.carrier_id = _Carrier.AirlineID
   association [1..*] to /DMO/I_Connection as _Connection    on $projection.connection_id = _Connection.ConnectionID

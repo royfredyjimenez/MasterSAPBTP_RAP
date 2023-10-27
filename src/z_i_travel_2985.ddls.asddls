@@ -6,7 +6,7 @@ define root view entity Z_I_TRAVEL_2985
   association [0..1] to /DMO/I_Agency     as _Agency       on $projection.AgencyId = _Agency.AgencyID
   association [0..1] to /DMO/I_Customer   as _Customer     on $projection.CustomerId = _Customer.CustomerID
   association [0..1] to I_Currency        as _Currency     on $projection.CurrencyCode = _Currency.Currency
-  association [0..1] to ZI_FE_STAT_000044 as _TravelStatus on $projection.TravelStatus = _TravelStatus.TravelStatusId
+  association [0..1] to zi_fe_stat_001009 as _TravelStatus on $projection.TravelStatus = _TravelStatus.TravelStatusId
 {
   key travel_id                      as TravelId,
       agency_id                      as AgencyId,

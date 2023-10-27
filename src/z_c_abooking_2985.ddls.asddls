@@ -1,10 +1,8 @@
 @EndUserText.label: 'Consumption - Booking Approval'
-@AccessControl.authorizationCheck: #CHECK
-@Metadata.allowExtensions: true
-define  view entity Z_C_ABOOKING_2985
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+define view entity Z_C_ABOOKING_2985
   as projection on Z_I_BOOKING_2985
 {
-
   key travel_id       as TravelID,
   key booking_id      as BookingID,
       booking_date    as BookingDate,
@@ -21,8 +19,9 @@ define  view entity Z_C_ABOOKING_2985
       booking_status  as BookingStatus,
       last_changed_at as LastChangedAt,
       /* Associations */
-      _Travel : redirected to parent Z_C_ATRAVEL_2985,
+      _BookingSupplement,
+      _Carrier,
+      _Connection,
       _Customer,
-      _Carrier
-
+      _Travel: redirected to parent Z_C_ATRAVEL_2985 
 }
