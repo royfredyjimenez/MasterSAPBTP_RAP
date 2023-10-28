@@ -22,7 +22,7 @@ define view entity Z_C_BOOKING_2985
       last_changed_at as LastChangedAt,
       /* Associations */
       _Travel            : redirected to parent Z_C_TRAVEL_2985,
-      _BookingSupplement : redirected to composition child Z_C_BOOKSUP_2985,
+    //  _BookingSupplement : redirected to composition child Z_C_BOOKSUP_2985,
       _Carrier,
       _Connection,
       _Customer

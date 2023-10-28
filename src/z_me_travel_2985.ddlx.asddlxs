@@ -27,7 +27,9 @@ annotate view Z_C_TRAVEL_2985 with
               label: 'Booking',
               position: 20,
               targetElement: '_Booking' }]
- 
+  @UI: {  lineItem:       [ { position: 10 } ],
+         identification: [ { position: 10 } ],
+         selectionField: [ { position: 10 } ] }
   TravelId;
 
   @UI: {
@@ -35,9 +37,9 @@ annotate view Z_C_TRAVEL_2985 with
           identification: [ { position: 20 } ],
           selectionField: [ { position: 20 } ] }
   @Consumption.valueHelpDefinition: [
-  { entity: { name: '/DMO/I_Agency', element: 'AgencyID'} } 
+  { entity: { name: '/DMO/I_Agency', element: 'AgencyID'} }
   ]
- 
+
   AgencyId;
   @UI: {
           lineItem: [{ position: 30, importance: #HIGH }],
@@ -72,13 +74,19 @@ annotate view Z_C_TRAVEL_2985 with
 
   @UI: { identification: [ { position: 46 } ] }
   Description;
+  @UI: { lineItem: [ { position: 60, importance: #HIGH ,criticality: 'OverallStatusCriticality' } ,
+       { type: #FOR_ACTION, dataAction: 'acceptTravel', label:  'Accept Travel' }
 
-  @UI: { lineItem: [ { position: 60, importance: #HIGH ,criticality: 'OverallStatusCriticality' } , 
-   { type: #FOR_ACTION, dataAction: 'createTravelByTemplate', label: 'Create Travel by Template' } ],
-  identification: [ { position: 55, label: 'Status [O(Open)|A(Accepted)|X(Canceled)]' } ] }
-  
+   ],
+  identification: [ { position: 55 },
+    { type: #FOR_ACTION, dataAction: 'acceptTravel', label: 'Accept Travel' }
+
+
+  ] }
+
   @UI.selectionField: [{ position: 60 }]
-  @UI.textArrangement: #TEXT_ONLY  
+  @UI.textArrangement: #TEXT_ONLY
+
   TravelStatus;
 
   @UI.hidden: true

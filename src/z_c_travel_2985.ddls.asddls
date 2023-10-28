@@ -19,7 +19,9 @@ define root view entity Z_C_TRAVEL_2985
       CustomerId,
       BeginDate,
       EndDate,
+      @Semantics.amount.currencyCode: 'CurrencyCode'
       BookingFee,
+      @Semantics.amount.currencyCode: 'CurrencyCode'
       TotalPrice,
       @Consumption.valueHelpDefinition: [ { entity: { name: 'I_Currency', element: 'Currency' } } ]
       CurrencyCode,

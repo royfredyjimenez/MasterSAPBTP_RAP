@@ -28,12 +28,12 @@ CLASS lhc_Travel DEFINITION INHERITING FROM cl_abap_behavior_handler.
         METHODS validatestatus FOR VALIDATE ON SAVE
       IMPORTING keys FOR Travel~validateStatus.
 
-
+*
     METHODS acceptTravel FOR MODIFY
       IMPORTING keys FOR ACTION Travel~acceptTravel RESULT result.
-
-    METHODS rejectTravel FOR MODIFY
-      IMPORTING keys FOR ACTION Travel~rejectTravel RESULT result.
+*
+*    METHODS rejectTravel FOR MODIFY
+*      IMPORTING keys FOR ACTION Travel~rejectTravel RESULT result.
 
     METHODS get_features FOR FEATURES
       IMPORTING keys REQUEST requested_features FOR Travel RESULT result.
@@ -45,6 +45,7 @@ CLASS lhc_Travel DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS: recalctotalprice FOR MODIFY
       IMPORTING keys FOR ACTION travel~recalcTotalPrice,
         createTravelByTemplate FOR MODIFY IMPORTING keys FOR ACTION Travel~createTravelByTemplate RESULT result.
+
 
     METHODS is_update_granted IMPORTING has_before_image      TYPE abap_bool
                                         overall_status        TYPE /dmo/overall_status
@@ -153,54 +154,54 @@ CLASS lhc_Travel IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD rejectTravel.
-
+*  METHOD rejectTravel.
+*
 *   Modify in Local Mode - BO - related updates there are not relevant autorization objects
-    MODIFY ENTITIES OF z_i_travel_2985 IN LOCAL MODE
-                ENTITY Travel
-         UPDATE FIELDS ( TravelStatus )
-            WITH VALUE #( FOR mod_row IN keys ( travelid = mod_row-travelid
-                                                TravelStatus = 'X' ) ) "Rejected
-                FAILED failed
-              REPORTED reported.
+*    MODIFY ENTITIES OF z_i_travel_2985 IN LOCAL MODE
+*                ENTITY Travel
+*         UPDATE FIELDS ( TravelStatus )
+*            WITH VALUE #( FOR mod_row IN keys ( travelid = mod_row-travelid
+*                                                TravelStatus = 'X' ) ) "Rejected
+*                FAILED failed
+*              REPORTED reported.
 * Se realiza la lectura de los datos modificados para volcarlos en un tabla interna
-    READ ENTITIES OF z_i_travel_2985 IN LOCAL MODE
-              ENTITY Travel
-              FIELDS ( agencyid
-                       customerid
-                       begindate
-                       enddate
-                       bookingfee
-                       totalprice
-                       currencycode
-                       TravelStatus
-                       description
-                       createdby
-                       createdat
-                       LastChangedBy
-                       LastChangedAt )
-     WITH VALUE #( FOR read_row IN keys ( travelid = read_row-travelid ) )
-                RESULT DATA(lt_travel).
+*    READ ENTITIES OF z_i_travel_2985 IN LOCAL MODE
+*              ENTITY Travel
+*              FIELDS ( agencyid
+*                       customerid
+*                       begindate
+*                       enddate
+*                       bookingfee
+*                       totalprice
+*                       currencycode
+*                       TravelStatus
+*                       description
+*                       createdby
+*                       createdat
+*                       LastChangedBy
+*                       LastChangedAt )
+*     WITH VALUE #( FOR read_row IN keys ( travelid = read_row-travelid ) )
+*                RESULT DATA(lt_travel).
 * Se realiza la asignación de datos para se visualizados en la capa de persistencia
-    result = VALUE #( FOR ls_travel IN lt_travel ( travelid = ls_travel-travelid
-                                                   %param = ls_travel ) ).
-
-    LOOP AT lt_travel ASSIGNING FIELD-SYMBOL(<ls_travel>).
-
-      DATA(lv_travel_msg) = <ls_travel>-travelid.
-      SHIFT lv_travel_msg LEFT DELETING LEADING '0'.
-      APPEND VALUE #( travelid = <ls_travel>-travelid
-                      %msg = new_message(
-                               id       = 'Z_MC_TRAVEL_2985'
-                               number   = '006'
-                               severity = if_abap_behv_message=>severity-success
-                               v1       = lv_travel_msg )
-                      %element-travelid = if_abap_behv=>mk-on
-                    ) TO reported-travel.
-
-    ENDLOOP.
-
-  ENDMETHOD.
+*    result = VALUE #( FOR ls_travel IN lt_travel ( travelid = ls_travel-travelid
+*                                                   %param = ls_travel ) ).
+*
+*    LOOP AT lt_travel ASSIGNING FIELD-SYMBOL(<ls_travel>).
+*
+*      DATA(lv_travel_msg) = <ls_travel>-travelid.
+*      SHIFT lv_travel_msg LEFT DELETING LEADING '0'.
+*      APPEND VALUE #( travelid = <ls_travel>-travelid
+*                      %msg = new_message(
+*                               id       = 'Z_MC_TRAVEL_2985'
+*                               number   = '006'
+*                               severity = if_abap_behv_message=>severity-success
+*                               v1       = lv_travel_msg )
+*                      %element-travelid = if_abap_behv=>mk-on
+*                    ) TO reported-travel.
+*
+*    ENDLOOP.
+*
+*  ENDMETHOD.
 
   METHOD createTravelByTemplate.
 
@@ -700,6 +701,7 @@ CLASS lhc_Travel IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
+
 
 ENDCLASS.
 

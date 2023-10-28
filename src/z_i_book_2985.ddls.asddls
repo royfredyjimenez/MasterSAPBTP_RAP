@@ -10,7 +10,7 @@
 /*+[hideWarning] { "IDS" : [ "CARDINALITY_CHECK" ]  } */
 define view entity Z_I_BOOK_2985
   as select from ztb_booking_2985 as Booking
-  composition [0..*] of Z_I_BOOKSUPPL_2985 as _bookingSupplement
+ // composition [0..*] of Z_I_BOOKSUPPL_2985 as _bookingSupplement
   association        to parent Z_I_TRAVEL_2985    as _Travel on  $projection.TravelId = _Travel.TravelId
   association [1..1] to /DMO/I_Customer    as _Customer      on  $projection.CustomerId = _Customer.CustomerID
   association [1..1] to /DMO/I_Carrier     as _Carrier       on  $projection.carrier_id = _Carrier.AirlineID
@@ -33,7 +33,7 @@ define view entity Z_I_BOOK_2985
       Booking.last_changed_at as LastChangedAt,
       /* asociaciones */
       _Travel,
-      _bookingSupplement,
+//      _bookingSupplement,
       _Customer,
       _Carrier,
       _Connection,

@@ -10,12 +10,14 @@ define view entity Z_C_BOOK_2985 as projection on Z_I_BOOK_2985
     carrier_id,
     ConnectionId,
     FlightDate,
+     @Semantics.amount.currencyCode: 'CurrencyCode'
     FlightPrice,
+     @Semantics.currencyCode: true
     CurrencyCode,
     BookingStatus,
     LastChangedAt,
     /* Associations */
-    _bookingSupplement: redirected to composition child Z_C_BOOKSUPPL_2985,
+ //   _bookingSupplement: redirected to composition child Z_C_BOOKSUPPL_2985,
     _Carrier,
     _Connection,
     _Customer,

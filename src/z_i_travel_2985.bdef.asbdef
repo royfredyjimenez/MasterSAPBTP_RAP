@@ -62,7 +62,7 @@ authorization dependent by _Travel
 etag master LastChangedAt
 {
   association _Travel;
-  association _BookingSupplement { create ( features : instance ); }
+ // association _BookingSupplement { create ( features : instance ); }
   update;
   delete;
   // Read only fields
@@ -93,35 +93,35 @@ etag master LastChangedAt
     }
 }
 
-define behavior for Z_I_BOOKSUPPL_2985 alias BookingSupplement //alias <alias_name>
-implementation in class zbp_i_booksup_2985 unique
-persistent table ztb_booksup_2985
-lock dependent by _Travel
-authorization dependent by _Travel
-etag master LastChangedAt
-{
-   // Campos estáticos de control
-  field ( readonly ) travelid, bookingid;
-  //Campos obligatorios
-  field ( mandatory : create ) supplementid, price;
-
-  update;
-  delete;
-
-  //Determinations
-  determination calculateTotalSupplimPrice on modify { field price, Currency; }
-
-  association _Travel;
-  association _Booking;
-
-  mapping for ztb_booksup_2985
-    {
-      travelid            = travel_id;
-      bookingid           = booking_id;
-      BookingSupplementId = booking_supplement_id;
-      supplementid        = supplement_id;
-      price               = price;
-      Currency            = currency_code;
-      LastChangedAt       = last_changed_at;
-    }
-}
+//define behavior for Z_I_BOOKSUPPL_2985 alias BookingSupplement //alias <alias_name>
+//implementation in class zbp_i_booksup_2985 unique
+//persistent table ztb_booksup_2985
+//lock dependent by _Travel
+//authorization dependent by _Travel
+//etag master LastChangedAt
+//{
+//  // Campos estáticos de control
+//  field ( readonly ) travelid, bookingid;
+//  //Campos obligatorios
+//  field ( mandatory : create ) supplementid, price;
+//
+//  update;
+//  delete;
+//
+//  //Determinations
+//  determination calculateTotalSupplimPrice on modify { field price, Currency; }
+//
+//  association _Travel;
+//  association _Booking;
+//
+//  mapping for ztb_booksup_2985
+//    {
+//      travelid            = travel_id;
+//      bookingid           = booking_id;
+//      BookingSupplementId = booking_supplement_id;
+//      supplementid        = supplement_id;
+//      price               = price;
+//      Currency            = currency_code;
+//      LastChangedAt       = last_changed_at;
+//    }
+//}
